@@ -257,12 +257,309 @@ p { margin: 0; }
 .promises li { display: grid; gap: .3rem; padding-left: 1.4rem; border-left: 5px solid var(--yolk); }
 .promises b { font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--yolk); }
 .promises p { max-width: 36em; text-wrap: pretty; }
-.platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: .9rem; margin-top: clamp(2.5rem, 5vw, 4rem); }
-.plat { padding: 1.1rem 1.2rem; border-radius: 20px; border: 3px solid var(--cream); display: grid; gap: .25rem; }
-.plat b { font-family: var(--display); font-weight: 400; font-size: 1.35rem; }
-.plat span { font-size: .92rem; opacity: .9; }
-.plat.mac { background: var(--mint); color: var(--ink); border-color: var(--mint); }
-.plat-note { margin-top: 1rem; font-size: .95rem; opacity: .85; }
+.privacy-plat-box {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding: 1.5rem 1.8rem; border-radius: 24px; border: 3px solid var(--cream);
+  background: rgba(250, 245, 235, .05);
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.privacy-plat-badges { display: flex; flex-wrap: wrap; gap: .6rem; }
+.privacy-plat-pill {
+  font-size: .85rem; font-weight: 700; padding: .35em .9em; border-radius: 999px;
+  background: var(--paper); color: var(--ink); border: 2px solid var(--cream);
+}
+.privacy-plat-box p { font-size: .95rem; line-height: 1.5; opacity: .9; }
+.privacy-hub-link {
+  font-weight: 800; font-size: .95rem; color: var(--mint); text-decoration: underline;
+  text-underline-offset: 4px; display: inline-flex; align-items: center; gap: .4rem;
+}
+.privacy-hub-link:hover { opacity: .85; }
+
+/* ---------- Downloads Section ---------- */
+.downloads-section {
+  background: var(--cream);
+  border-top: var(--edge);
+  padding-block: clamp(5rem, 8vw, 8rem);
+}
+.dl-head {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 1.1rem; margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.dl-pill-tag {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--body); font-weight: 800; font-size: .85rem; letter-spacing: .06em;
+  text-transform: uppercase; padding: .45em 1.2em;
+  background: var(--yolk); color: var(--ink);
+  border: 2.5px solid var(--ink); border-radius: 999px;
+  box-shadow: 0 4px 0 var(--ink);
+}
+.dl-tabs {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem;
+  margin-top: .8rem;
+}
+.dl-tab {
+  display: inline-flex; align-items: center; gap: .45rem;
+  padding: .65em 1.25em; border-radius: 999px; border: 2.5px solid var(--ink);
+  background: var(--paper); color: var(--ink); font: 700 .95rem var(--body);
+  cursor: pointer; box-shadow: 0 4px 0 var(--ink);
+  transition: transform .12s, box-shadow .12s, background .15s;
+}
+.dl-tab:hover { background: var(--yolk-hi); }
+.dl-tab.active { background: var(--ink); color: var(--cream); box-shadow: 0 4px 0 #8a5600; }
+.dl-tab svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.dl-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.2rem, 2.5vw, 2rem); align-items: stretch;
+}
+.dl-card {
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: clamp(1.4rem, 2.5vw, 2rem);
+  background: var(--paper); border: var(--edge); border-radius: var(--r-md);
+  box-shadow: var(--pop); position: relative;
+  transition: transform .2s cubic-bezier(.3, 1.5, .5, 1), box-shadow .2s;
+}
+.dl-card:hover { transform: translateY(-4px); box-shadow: 0 10px 0 var(--ink); }
+.dl-card.is-detected {
+  border-color: var(--ink);
+  box-shadow: 0 8px 0 var(--cobalt), 0 0 0 3px var(--mint);
+}
+.detected-pill {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--mint); color: var(--ink); font-weight: 800; font-size: .78rem;
+  padding: .35em .9em; border-radius: 999px; border: 2px solid var(--ink);
+  box-shadow: 0 3px 0 var(--ink); white-space: nowrap; z-index: 2;
+  display: none;
+}
+.dl-card.is-detected .detected-pill { display: inline-flex; }
+
+.dl-card-top { display: flex; flex-direction: column; gap: 1.1rem; }
+.dl-card-header {
+  display: flex; align-items: center; justify-content: space-between; gap: .8rem;
+}
+.dl-icon-badge {
+  width: 3.4rem; height: 3.4rem; border-radius: 20px;
+  border: 2.5px solid var(--ink); display: grid; place-items: center;
+  box-shadow: 0 4px 0 var(--ink); flex-shrink: 0;
+}
+.dl-icon-badge.mac { background: var(--mint); }
+.dl-icon-badge.win { background: var(--cobalt); color: var(--cream); }
+.dl-icon-badge.linux { background: var(--yolk); }
+.dl-icon-badge svg { width: 1.8rem; height: 1.8rem; }
+
+.dl-platform-meta { display: flex; flex-direction: column; gap: .2rem; flex: 1; }
+.dl-platform-meta h3 { font-family: var(--display); font-size: 1.65rem; margin: 0; }
+.dl-os-ver { font-size: .85rem; font-weight: 600; opacity: .75; }
+
+.dl-card-desc { font-size: .95rem; line-height: 1.45; color: rgba(26, 22, 18, .85); }
+
+.dl-primary-cta {
+  display: flex; flex-direction: column; gap: .4rem;
+  margin-block: .8rem;
+}
+.dl-btn-primary {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  width: 100%; box-sizing: border-box; text-decoration: none;
+  font: 700 1.02rem var(--body); padding: .9em 1.25em;
+  background: var(--ink); color: var(--cream); border: var(--edge);
+  border-radius: 16px; box-shadow: 0 5px 0 #8a5600; cursor: pointer;
+  transition: transform .12s, box-shadow .12s;
+}
+.dl-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #8a5600; }
+.dl-btn-primary:active { transform: translateY(3px); box-shadow: 0 1px 0 #8a5600; }
+.dl-btn-primary .btn-left { display: flex; align-items: center; gap: .6rem; }
+.dl-size-tag {
+  font-size: .8rem; font-weight: 700; padding: .25em .6em; border-radius: 8px;
+  background: rgba(255, 255, 255, .18); color: var(--cream);
+}
+.dl-sub-label {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: .82rem; font-weight: 600; opacity: .8; padding-inline: .2rem;
+}
+.rec-chip {
+  background: var(--mint); color: var(--ink); border: 1.5px solid var(--ink);
+  border-radius: 6px; padding: .15em .5em; font-weight: 800; font-size: .74rem;
+}
+
+.dl-alt-options {
+  border-top: 2px dashed rgba(26, 22, 18, .2);
+  padding-top: 1rem; margin-top: .4rem;
+  display: flex; flex-direction: column; gap: .55rem;
+}
+.dl-alt-title { font-size: .82rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; opacity: .65; }
+.dl-alt-item {
+  display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+  padding: .5rem .7rem; border-radius: 12px; background: rgba(0, 0, 0, .03);
+  text-decoration: none; color: var(--ink); font-size: .88rem; font-weight: 600;
+  border: 1.5px solid transparent; transition: all .12s;
+}
+.dl-alt-item:hover {
+  background: var(--paper); border-color: var(--ink);
+  transform: translateX(3px); box-shadow: 0 3px 0 var(--ink);
+}
+.dl-alt-name { display: flex; align-items: center; gap: .4rem; }
+.dl-ext-pill {
+  font-size: .74rem; font-weight: 800; padding: .15em .45em; border-radius: 6px;
+  background: var(--smoke); border: 1px solid rgba(26, 22, 18, .2);
+}
+.dl-alt-meta { display: flex; align-items: center; gap: .5rem; font-size: .82rem; opacity: .8; }
+
+.dl-cmd-box {
+  margin-top: .6rem; padding: .65rem .8rem; background: var(--ink); color: var(--cream);
+  border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+}
+.dl-cmd-box code {
+  font: 500 .82rem/1.3 ui-monospace, Menlo, monospace; overflow-x: auto; white-space: nowrap;
+}
+.dl-copy-btn {
+  border: 0; background: var(--mint); color: var(--ink); font: 800 .75rem var(--body);
+  padding: .35em .75em; border-radius: 8px; cursor: pointer; flex-shrink: 0;
+}
+.dl-copy-btn:hover { background: var(--yolk-hi); }
+
+.dl-features-list {
+  list-style: none; padding: 0; margin: 1.2rem 0 0 0;
+  display: grid; gap: .45rem; font-size: .88rem; font-weight: 600;
+  border-top: 2px solid rgba(26, 22, 18, .1); padding-top: .9rem;
+}
+.dl-features-list li {
+  display: flex; align-items: center; gap: .5rem;
+}
+.dl-features-list li::before {
+  content: "✓"; color: #059669; font-weight: 900;
+}
+
+/* Checksums Callout Banner */
+.checksum-callout {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  background: var(--paper); border: var(--edge); border-radius: var(--r-md);
+  box-shadow: var(--pop); padding: clamp(1.5rem, 3vw, 2.2rem);
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
+}
+.checksum-info { display: flex; align-items: center; gap: 1.2rem; flex: 1; min-width: 260px; }
+.checksum-shield {
+  width: 3.5rem; height: 3.5rem; border-radius: 50%;
+  background: var(--lilac); border: 2.5px solid var(--ink);
+  box-shadow: 0 4px 0 var(--ink); display: grid; place-items: center; flex-shrink: 0;
+}
+.checksum-shield svg { width: 1.8rem; height: 1.8rem; }
+.checksum-text h4 { font-family: var(--display); font-size: 1.4rem; margin: 0 0 .25rem 0; }
+.checksum-text p { font-size: .95rem; opacity: .85; }
+
+/* ---------- Dialog Modal ---------- */
+.checksum-dialog {
+  padding: 0; border: var(--edge); border-radius: 24px;
+  background: var(--cream); color: var(--ink);
+  max-width: 980px; width: 92vw; max-height: 88vh;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
+  overflow: hidden;
+}
+.checksum-dialog::backdrop {
+  background: rgba(26, 22, 18, .65);
+  backdrop-filter: blur(8px);
+}
+.dialog-inner {
+  display: flex; flex-direction: column; max-height: 88vh;
+}
+.dialog-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 1.8rem; border-bottom: var(--edge);
+  background: var(--yolk-hi);
+}
+.dialog-header h3 { font-family: var(--display); font-size: 1.5rem; margin: 0; }
+.dialog-close-btn {
+  width: 2.4rem; height: 2.4rem; border-radius: 50%;
+  border: 2px solid var(--ink); background: var(--paper); color: var(--ink);
+  font: 800 1.2rem var(--body); display: grid; place-items: center;
+  cursor: pointer; box-shadow: 0 3px 0 var(--ink);
+  transition: transform .1s, background .15s;
+}
+.dialog-close-btn:hover { background: var(--bubblegum); color: var(--cream); transform: scale(1.05); }
+
+.dialog-body {
+  padding: 1.6rem 1.8rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1.4rem;
+}
+.verify-instructions {
+  background: var(--paper); border: 2px solid var(--ink); border-radius: 16px;
+  padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: .6rem;
+}
+.verify-instructions b { font-family: var(--display); font-size: 1.1rem; }
+.verify-cmd-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .8rem; margin-top: .4rem;
+}
+.verify-cmd-card {
+  background: var(--ink); color: var(--cream); padding: .7rem .9rem; border-radius: 10px;
+  display: flex; flex-direction: column; gap: .3rem; font-size: .82rem;
+}
+.verify-cmd-card span { font-weight: 700; color: var(--mint); }
+.verify-cmd-card code { font-family: ui-monospace, Menlo, monospace; font-size: .78rem; word-break: break-all; }
+
+.checksum-table-wrap {
+  overflow-x: auto; border: 2px solid var(--ink); border-radius: 16px;
+  background: var(--paper); box-shadow: 0 4px 0 var(--ink);
+}
+.checksum-table {
+  width: 100%; border-collapse: collapse; text-align: left; font-size: .88rem;
+}
+.checksum-table th {
+  background: var(--smoke); padding: .85rem 1rem; font-family: var(--display);
+  font-weight: 700; border-bottom: 2px solid var(--ink);
+}
+.checksum-table td {
+  padding: .75rem 1rem; border-bottom: 1px solid rgba(26, 22, 18, .12); vertical-align: middle;
+}
+.checksum-table tr:last-child td { border-bottom: 0; }
+.hash-cell {
+  font-family: ui-monospace, Menlo, monospace; font-size: .78rem;
+  display: flex; align-items: center; gap: .4rem;
+}
+.hash-text {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px;
+}
+.btn-copy-hash {
+  background: var(--smoke); border: 1.5px solid var(--ink); border-radius: 6px;
+  padding: .2em .55em; font-weight: 700; font-size: .74rem; cursor: pointer; flex-shrink: 0;
+}
+.btn-copy-hash:hover { background: var(--mint); }
+.btn-table-dl {
+  display: inline-flex; align-items: center; gap: .3rem;
+  padding: .35em .8em; border-radius: 999px; border: 2px solid var(--ink);
+  background: var(--ink); color: var(--cream); font-weight: 700; font-size: .8rem;
+  text-decoration: none; box-shadow: 0 2px 0 #8a5600; white-space: nowrap;
+}
+.btn-table-dl:hover { transform: translateY(-1px); }
+
+/* Hero OS indicator */
+.hero-os-note {
+  display: inline-flex; align-items: center; gap: .55rem;
+  margin-top: 1.1rem; padding: .45rem 1rem;
+  background: var(--paper); border: 2px solid var(--ink); border-radius: 999px;
+  box-shadow: 0 3px 0 var(--ink); font-size: .9rem; font-weight: 600;
+  width: fit-content; max-width: 100%; flex-wrap: wrap;
+}
+.pulse-dot {
+  width: .65rem; height: .65rem; border-radius: 50%; background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-ring 2s infinite; flex-shrink: 0;
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 7px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+.dot-sep { opacity: .4; }
+.jump-dl-link { color: var(--cobalt); text-decoration: underline; text-underline-offset: 3px; font-weight: 700; }
+.jump-dl-link:hover { opacity: .8; }
+
+.btn-hero-dl {
+  display: inline-flex; align-items: center; gap: .75rem;
+  padding: .75rem 1.4rem; text-align: left;
+}
+.btn-os-icon { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; flex-shrink: 0; }
+.btn-os-icon svg { width: 100%; height: 100%; }
+.btn-text-col { display: flex; flex-direction: column; gap: .12rem; line-height: 1.15; }
+.btn-title { font-size: 1.05rem; font-weight: 700; }
+.btn-sub { font-size: .8rem; font-weight: 600; opacity: .85; }
 
 /* get it */
 .get { background: var(--yolk); overflow: hidden; padding-bottom: clamp(7rem, 12vw, 10rem); }
@@ -291,22 +588,23 @@ footer a { text-underline-offset: 4px; }
 
 @media (max-width: 960px) {
   .hero-grid, .try-grid, .privacy-grid { grid-template-columns: minmax(0, 1fr); }
-  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cards, .dl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .stage-col { max-width: 560px; margin-inline: auto; width: 100%; }
   .nav-links a:not(.btn) { display: none; }
 }
-@media (max-width: 620px) {
-  .cards { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 680px) {
+  .cards, .dl-grid { grid-template-columns: minmax(0, 1fr); }
   .card { rotate: 0deg !important; }
   .prop.timer { left: 0; }
   .peek { opacity: .95; width: 170px; right: -30px; }
   .tape { margin-top: -2.4rem; }
+  .checksum-callout { flex-direction: column; align-items: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .tape-inner, .badge, .prop, .disc { animation: none; }
   .device.bump { animation: none; }
-  .card, .tile, .btn, .chip { transition: none; }
+  .card, .tile, .btn, .chip, .dl-card { transition: none; }
 }
 </style>
 
@@ -320,7 +618,8 @@ footer a { text-underline-offset: 4px; }
         <a href="#faces">Faces</a>
         <a href="#try">Try it</a>
         <a href="#privacy">Privacy</a>
-        <a class="btn" href="Mochi-Desktop-Companion.dmg" download="Mochi-Desktop-Companion.dmg" data-download-btn>Download for Mac</a>
+        <a href="#download">Downloads</a>
+        <a class="btn" href="#download" data-nav-dl-btn id="nav-download-btn"><span id="nav-dl-text">Download v1.0.0</span></a>
       </div>
     </nav>
 
@@ -328,18 +627,30 @@ footer a { text-underline-offset: 4px; }
       <div class="hero-copy">
         <h1>A tiny pal who lives on your desktop.</h1>
         <p class="lede">Mochi floats above your windows, follows your cursor with its eyes, bounces when you type and reminds you to drink water. It knows which app you are in. It never sees what you type.</p>
-        <div class="cta-row">
-          <a class="btn" href="Mochi-Desktop-Companion.dmg" download="Mochi-Desktop-Companion.dmg" data-download-btn id="hero-download-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download and try this on Mac (.dmg)
+        <div class="cta-row hero-cta-row">
+          <a class="btn btn-hero-dl" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/Mochi-Desktop-Companion-1.0.0-arm64.dmg" data-hero-dl-btn id="hero-download-btn">
+            <span class="btn-os-icon" id="hero-os-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 3.5c.62-.75 1.04-1.8 1.01-2.85-.9.04-1.98.6-2.62 1.35-.57.65-1.07 1.71-1.02 2.73 1 .08 2.01-.48 2.63-1.23z"/></svg>
+            </span>
+            <span class="btn-text-col">
+              <span class="btn-title" id="hero-dl-title">Download for Mac</span>
+              <span class="btn-sub" id="hero-dl-sub">Apple Silicon (.dmg) • v1.0.0</span>
+            </span>
           </a>
-          <a class="btn alt" href="#faces">Meet the faces</a>
+          <a class="btn alt" href="#download">All Platforms &darr;</a>
           <a class="btn alt" href="https://github.com/lakshangan/mochi" target="_blank" rel="noopener">GitHub</a>
         </div>
+        <div class="hero-os-note" id="hero-os-note">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <span id="hero-detected-text">Auto-detected: macOS (Apple Silicon M-series)</span>
+          <span class="dot-sep" aria-hidden="true">•</span>
+          <a href="#download" class="jump-dl-link">Need Windows or Linux? See all &darr;</a>
+        </div>
         <ul class="facts" aria-label="Quick facts">
-          <li>Free and open source</li>
-          <li>Works offline</li>
-          <li>macOS (.dmg ready)</li>
+          <li>Free and open source (MIT)</li>
+          <li>100% offline & private</li>
+          <li>macOS, Windows & Linux ready</li>
+          <li>v1.0.0 available</li>
         </ul>
       </div>
 
@@ -471,22 +782,264 @@ footer a { text-underline-offset: 4px; }
         <li><b>Where your things live</b><p>Tasks, notes and settings sit in one file on your computer. There is no account and no telemetry.</p></li>
         <li><b>When it goes online</b><p>Only if you add your own OpenAI key to chat with it. Timers, reminders and commands all work offline.</p></li>
       </ul>
-    </div>
-    <div class="platforms">
-      <div class="plat mac">
-        <b>macOS</b>
-        <span>Everything, including app awareness and typing reactions.</span>
-        <a class="plat-dl-link" href="Mochi-Desktop-Companion.dmg" download="Mochi-Desktop-Companion.dmg" data-download-btn>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download macOS DMG &darr;
-        </a>
+    <div class="privacy-plat-box">
+      <div class="privacy-plat-badges">
+        <span class="privacy-plat-pill">🍎 macOS 11+</span>
+        <span class="privacy-plat-pill">🪟 Windows 10/11</span>
+        <span class="privacy-plat-pill">🐧 Linux (Universal)</span>
       </div>
-      <div class="plat"><b>Windows</b><span>The pet, timers, reminders, tasks and notes.</span></div>
-      <div class="plat"><b>Linux</b><span>The pet, timers, reminders, tasks and notes.</span></div>
+      <p>Mochi is a cross-platform desktop application built with Electron, React, and TypeScript. All features (offline timers, pomodoro counters, interactive faces, scratch notes, and local chat) work on every OS. Active frontmost application awareness currently runs on macOS.</p>
+      <a href="#download" class="privacy-hub-link">
+        Explore and download packages for your operating system &darr;
+      </a>
     </div>
-    <p class="plat-note">App awareness is macOS-only for now.</p>
   </div>
 </section>
+
+<section class="slab downloads-section" id="download">
+  <div class="wrap">
+    <div class="dl-head">
+      <div class="dl-pill-tag">✦ Version 1.0.0 • Cross-Platform Release</div>
+      <h2>Get Mochi for your machine.</h2>
+      <p class="sub">Pick your operating system and architecture below. Every build is standalone, light on resources, and works completely offline without accounts.</p>
+      <div class="dl-tabs" role="tablist" aria-label="Platform filter">
+        <button type="button" class="dl-tab active" data-dl-filter="all" role="tab" aria-selected="true">
+          All Platforms (3)
+        </button>
+        <button type="button" class="dl-tab" data-dl-filter="mac" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 3.5c.62-.75 1.04-1.8 1.01-2.85-.9.04-1.98.6-2.62 1.35-.57.65-1.07 1.71-1.02 2.73 1 .08 2.01-.48 2.63-1.23z"/></svg>
+          macOS
+        </button>
+        <button type="button" class="dl-tab" data-dl-filter="win" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.479l7.377-1.016v7.127H3V5.479zm0 13.042l7.377 1.017v-7.04H3v6.023zm8.333 1.149L21 21V11.59H11.333v8.078zm0-15.341v8.08H21V3l-9.667 1.329z"/></svg>
+          Windows
+        </button>
+        <button type="button" class="dl-tab" data-dl-filter="linux" role="tab" aria-selected="false">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 7.5 4 7.5 6.5c0 1.2.5 2.3 1.3 3.1-.1.4-.3.9-.3 1.4 0 2.2 1.8 4 4 4s4-1.8 4-4c0-.5-.2-1-.3-1.4.8-.8 1.3-1.9 1.3-3.1C17.5 4 15.5 2 12 2zm-2.5 4.5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5S11.8 8 11 8s-1.5-.7-1.5-1.5zm6 0c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5.7-1.5 1.5-1.5 1.5.7 1.5 1.5zM6 19.5c0-1.9 1.6-3.5 3.5-3.5h5c1.9 0 3.5 1.6 3.5 3.5 0 .8-.7 1.5-1.5 1.5H7.5C6.7 21 6 20.3 6 19.5z"/></svg>
+          Linux
+        </button>
+      </div>
+    </div>
+
+    <div class="dl-grid" id="dl-cards-grid">
+      <!-- Card 1: macOS -->
+      <div class="dl-card" data-platform="mac" id="card-mac">
+        <span class="detected-pill" id="mac-detected-pill">✦ Detected for your Mac</span>
+        <div class="dl-card-top">
+          <div class="dl-card-header">
+            <div class="dl-icon-badge mac">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 3.5c.62-.75 1.04-1.8 1.01-2.85-.9.04-1.98.6-2.62 1.35-.57.65-1.07 1.71-1.02 2.73 1 .08 2.01-.48 2.63-1.23z"/></svg>
+            </div>
+            <div class="dl-platform-meta">
+              <h3>macOS</h3>
+              <span class="dl-os-ver">macOS 11.0 (Big Sur) or newer</span>
+            </div>
+          </div>
+          <p class="dl-card-desc">Floating desk pal with full app context awareness, active window reactions, and retina LED bead matrix.</p>
+
+          <div class="dl-primary-cta">
+            <div class="dl-sub-label">
+              <span>Apple Silicon (M1/M2/M3/M4)</span>
+              <span class="rec-chip">Recommended</span>
+            </div>
+            <a class="dl-btn-primary" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/Mochi-Desktop-Companion-1.0.0-arm64.dmg" data-asset="Mochi-Desktop-Companion-1.0.0-arm64.dmg" data-local-fallback="release/Mochi Desktop Companion-1.0.0-arm64.dmg">
+              <span class="btn-left">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Download DMG</span>
+              </span>
+              <span class="dl-size-tag">110.5 MB</span>
+            </a>
+          </div>
+
+          <div class="dl-alt-options">
+            <span class="dl-alt-title">Other macOS Architectures</span>
+            <a class="dl-alt-item" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/Mochi-Desktop-Companion-1.0.0.dmg" data-asset="Mochi-Desktop-Companion-1.0.0.dmg" data-local-fallback="release/Mochi Desktop Companion-1.0.0.dmg">
+              <span class="dl-alt-name">Intel Mac (x86_64) <span class="dl-ext-pill">.dmg</span></span>
+              <span class="dl-alt-meta">114.7 MB &darr;</span>
+            </a>
+            <a class="dl-alt-item" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/Mochi-Desktop-Companion-1.0.0-universal.dmg" data-asset="Mochi-Desktop-Companion-1.0.0-universal.dmg" data-local-fallback="release/Mochi Desktop Companion-1.0.0-universal.dmg">
+              <span class="dl-alt-name">Universal Mac <span class="dl-ext-pill">.dmg</span></span>
+              <span class="dl-alt-meta">194.2 MB &darr;</span>
+            </a>
+            <a class="dl-alt-item" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/Mochi-Desktop-Companion-1.0.0-arm64-mac.zip" data-asset="Mochi-Desktop-Companion-1.0.0-arm64-mac.zip" data-local-fallback="release/Mochi Desktop Companion-1.0.0-arm64-mac.zip">
+              <span class="dl-alt-name">Apple Silicon Portable <span class="dl-ext-pill">.zip</span></span>
+              <span class="dl-alt-meta">105.7 MB &darr;</span>
+            </a>
+            <a class="dl-alt-item" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/Mochi-Desktop-Companion-1.0.0-mac.zip" data-asset="Mochi-Desktop-Companion-1.0.0-mac.zip" data-local-fallback="release/Mochi Desktop Companion-1.0.0-mac.zip">
+              <span class="dl-alt-name">Intel Mac Portable <span class="dl-ext-pill">.zip</span></span>
+              <span class="dl-alt-meta">109.9 MB &darr;</span>
+            </a>
+          </div>
+        </div>
+
+        <ul class="dl-features-list">
+          <li>Menu bar resident with quick status toggle</li>
+          <li>Real-time app awareness & typing bounce</li>
+          <li>Native Apple Silicon M-series optimized</li>
+        </ul>
+      </div>
+
+      <!-- Card 2: Windows -->
+      <div class="dl-card" data-platform="win" id="card-win">
+        <span class="detected-pill" id="win-detected-pill">✦ Detected for your PC</span>
+        <div class="dl-card-top">
+          <div class="dl-card-header">
+            <div class="dl-icon-badge win">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.479l7.377-1.016v7.127H3V5.479zm0 13.042l7.377 1.017v-7.04H3v6.023zm8.333 1.149L21 21V11.59H11.333v8.078zm0-15.341v8.08H21V3l-9.667 1.329z"/></svg>
+            </div>
+            <div class="dl-platform-meta">
+              <h3>Windows</h3>
+              <span class="dl-os-ver">Windows 10 / 11 (64-bit)</span>
+            </div>
+          </div>
+          <p class="dl-card-desc">Desktop companion with system tray integration, pomodoro timers, hydration alerts, and offline scratch notes.</p>
+
+          <div class="dl-primary-cta">
+            <div class="dl-sub-label">
+              <span>Windows Setup Installer</span>
+              <span class="rec-chip">Recommended</span>
+            </div>
+            <a class="dl-btn-primary" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/Mochi-Desktop-Companion-Setup-1.0.0.exe" data-asset="Mochi-Desktop-Companion-Setup-1.0.0.exe" data-local-fallback="release/Mochi Desktop Companion Setup 1.0.0.exe">
+              <span class="btn-left">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Download Setup</span>
+              </span>
+              <span class="dl-size-tag">87.6 MB</span>
+            </a>
+          </div>
+
+          <div class="dl-alt-options">
+            <span class="dl-alt-title">Portable / Zero-Install</span>
+            <a class="dl-alt-item" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/Mochi-Desktop-Companion-1.0.0.exe" data-asset="Mochi-Desktop-Companion-1.0.0.exe" data-local-fallback="release/Mochi Desktop Companion 1.0.0.exe">
+              <span class="dl-alt-name">Standalone Portable <span class="dl-ext-pill">.exe</span></span>
+              <span class="dl-alt-meta">87.3 MB &darr;</span>
+            </a>
+          </div>
+        </div>
+
+        <ul class="dl-features-list">
+          <li>Automated desktop shortcut & uninstaller</li>
+          <li>Ultra-light memory footprint (~40MB idle)</li>
+          <li>System tray pet with one-click hide/reveal</li>
+        </ul>
+      </div>
+
+      <!-- Card 3: Linux -->
+      <div class="dl-card" data-platform="linux" id="card-linux">
+        <span class="detected-pill" id="linux-detected-pill">✦ Detected for your Linux system</span>
+        <div class="dl-card-top">
+          <div class="dl-card-header">
+            <div class="dl-icon-badge linux">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 7.5 4 7.5 6.5c0 1.2.5 2.3 1.3 3.1-.1.4-.3.9-.3 1.4 0 2.2 1.8 4 4 4s4-1.8 4-4c0-.5-.2-1-.3-1.4.8-.8 1.3-1.9 1.3-3.1C17.5 4 15.5 2 12 2zm-2.5 4.5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5S11.8 8 11 8s-1.5-.7-1.5-1.5zm6 0c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5.7-1.5 1.5-1.5 1.5.7 1.5 1.5zM6 19.5c0-1.9 1.6-3.5 3.5-3.5h5c1.9 0 3.5 1.6 3.5 3.5 0 .8-.7 1.5-1.5 1.5H7.5C6.7 21 6 20.3 6 19.5z"/></svg>
+            </div>
+            <div class="dl-platform-meta">
+              <h3>Linux</h3>
+              <span class="dl-os-ver">Ubuntu, Debian, Fedora, Arch & more</span>
+            </div>
+          </div>
+          <p class="dl-card-desc">Self-contained universal AppImage and source tarball for all distributions on X11 and Wayland desktops.</p>
+
+          <div class="dl-primary-cta">
+            <div class="dl-sub-label">
+              <span>Universal AppImage (Standalone)</span>
+              <span class="rec-chip">Recommended</span>
+            </div>
+            <a class="dl-btn-primary" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/Mochi-Desktop-Companion-1.0.0.AppImage" data-asset="Mochi-Desktop-Companion-1.0.0.AppImage" data-local-fallback="release/Mochi Desktop Companion-1.0.0.AppImage">
+              <span class="btn-left">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Download AppImage</span>
+              </span>
+              <span class="dl-size-tag">116.1 MB</span>
+            </a>
+          </div>
+
+          <div class="dl-alt-options">
+            <span class="dl-alt-title">Alternative Archives</span>
+            <a class="dl-alt-item" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/mochi-desktop-companion-1.0.0.tar.gz" data-asset="mochi-desktop-companion-1.0.0.tar.gz" data-local-fallback="release/mochi-desktop-companion-1.0.0.tar.gz">
+              <span class="dl-alt-name">Source Tarball <span class="dl-ext-pill">.tar.gz</span></span>
+              <span class="dl-alt-meta">109.3 MB &darr;</span>
+            </a>
+          </div>
+
+          <div class="dl-cmd-box">
+            <code id="linux-cmd-code">chmod +x Mochi*.AppImage && ./Mochi*.AppImage</code>
+            <button type="button" class="dl-copy-btn" id="linux-cmd-copy">Copy</button>
+          </div>
+        </div>
+
+        <ul class="dl-features-list">
+          <li>Runs anywhere without installing dependencies</li>
+          <li>Full support for X11 & Wayland compositors</li>
+          <li>Zero background telemetry or network calls</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Security Checksum Callout Banner -->
+    <div class="checksum-callout">
+      <div class="checksum-info">
+        <div class="checksum-shield" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="checksum-text">
+          <h4>Deterministic Builds & Cryptographic Hashes</h4>
+          <p>Every binary is signed and verified with SHA-512 hashes so you can independently verify package integrity.</p>
+        </div>
+      </div>
+      <button type="button" class="btn alt" id="open-checksums-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        View SHA-512 Checksums (10 Files)
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Accessible Modal Dialog for Checksums -->
+<dialog id="checksum-dialog" class="checksum-dialog" aria-labelledby="dialog-title">
+  <div class="dialog-inner">
+    <div class="dialog-header">
+      <h3 id="dialog-title">Release v1.0.0 Checksums & Verification</h3>
+      <button type="button" class="dialog-close-btn" id="close-checksums-btn" aria-label="Close dialog">&times;</button>
+    </div>
+    <div class="dialog-body">
+      <div class="verify-instructions">
+        <b>How to verify your download:</b>
+        <p>Compare the hash printed by your terminal against the official release hash below to ensure file integrity:</p>
+        <div class="verify-cmd-grid">
+          <div class="verify-cmd-card">
+            <span>macOS Terminal:</span>
+            <code>shasum -a 512 &lt;filename&gt;</code>
+          </div>
+          <div class="verify-cmd-card">
+            <span>Windows PowerShell:</span>
+            <code>Get-FileHash &lt;filename&gt; -Algorithm SHA512</code>
+          </div>
+          <div class="verify-cmd-card">
+            <span>Linux Shell:</span>
+            <code>sha512sum &lt;filename&gt;</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="checksum-table-wrap">
+        <table class="checksum-table">
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>File Name</th>
+              <th>Size</th>
+              <th>SHA-512 Checksum</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="checksum-tbody">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</dialog>
 
 <section class="slab get" id="get">
   <div class="wrap">
@@ -497,10 +1050,11 @@ footer a { text-underline-offset: 4px; }
       <button type="button" id="cmd-copy">Copy</button>
     </div>
     <div class="cta-row">
-      <a class="btn" href="Mochi-Desktop-Companion.dmg" download="Mochi-Desktop-Companion.dmg" data-download-btn>
+      <a class="btn" href="https://github.com/lakshangan/mochi-landing-page/releases/download/v1.0.0/Mochi-Desktop-Companion-1.0.0-arm64.dmg" data-bottom-dl-btn id="bottom-download-btn">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download and try this on Mac (.dmg)
+        <span id="bottom-dl-text">Download Mochi (.dmg)</span>
       </a>
+      <a class="btn alt" href="#download">All Platforms &darr;</a>
       <a class="btn alt" href="https://github.com/lakshangan/mochi" target="_blank" rel="noopener">View on GitHub</a>
     </div>
   </div>
@@ -904,13 +1458,340 @@ function bindChips(setMood) {
   wake(4000); renderer.render(scene, camera);
   setTimeout(() => { say('Hi, I am Mochi.', 3200); if (!RM) setMood('happy', 1800); }, RM ? 300 : 1000);
 
-  /* dynamic download link routing (local DMG file when local, GitHub Release CDN when hosted on web) */
-  const GITHUB_RELEASE_DMG = 'https://github.com/lakshangan/mochi-landing-page/releases/download/v0.1.0/Mochi-Desktop-Companion.dmg';
-  const isWebHosted = window.location.protocol.startsWith('http') && !['localhost', '127.0.0.1'].includes(window.location.hostname);
-  if (isWebHosted) {
-    document.querySelectorAll('[data-download-btn]').forEach((btn) => {
-      btn.href = GITHUB_RELEASE_DMG;
-      btn.removeAttribute('download');
+  /* ==========================================================================
+     Cross-Platform Release & Download Routing Logic (v1.0.0)
+     ========================================================================== */
+  const RELEASE_TAG = 'v1.0.0';
+  const GITHUB_RELEASE_BASE = `https://github.com/lakshangan/mochi-landing-page/releases/download/${RELEASE_TAG}`;
+  const isLocalEnv = !window.location.protocol.startsWith('http') || ['localhost', '127.0.0.1'].includes(window.location.hostname);
+
+  const RELEASE_ASSETS = [
+    {
+      platform: 'mac',
+      platformLabel: 'macOS',
+      chip: 'Apple Silicon (M1/M2/M3/M4)',
+      name: 'Mochi-Desktop-Companion-1.0.0-arm64.dmg',
+      localFile: 'release/Mochi Desktop Companion-1.0.0-arm64.dmg',
+      format: '.dmg',
+      size: '110.5 MB',
+      recommended: true,
+      sha512: '702f07f0b58213c2512c3d4da0eec93a7b692a8abb29c483462cb8eecc2adbd8e5c739913b26208b701d7213142abad8a8c290493881ee416daf2280b6749ca8'
+    },
+    {
+      platform: 'mac',
+      platformLabel: 'macOS',
+      chip: 'Intel (x86_64)',
+      name: 'Mochi-Desktop-Companion-1.0.0.dmg',
+      localFile: 'release/Mochi Desktop Companion-1.0.0.dmg',
+      format: '.dmg',
+      size: '114.7 MB',
+      recommended: false,
+      sha512: 'd61c3a12afc048567449598c799a7d8ecc27035edacab53a23082b51facb69e497c36467959af958e74fe052f96f3b2dd96aa57fc410ceb51e279db452846dc1'
+    },
+    {
+      platform: 'mac',
+      platformLabel: 'macOS',
+      chip: 'Universal (Apple Silicon & Intel)',
+      name: 'Mochi-Desktop-Companion-1.0.0-universal.dmg',
+      localFile: 'release/Mochi Desktop Companion-1.0.0-universal.dmg',
+      format: '.dmg',
+      size: '194.2 MB',
+      recommended: false,
+      sha512: 'eaa53d837044a98d7353369d1cfbcc4f034f686fc7e36c8a4866fb4e49bed8954b252214278df31b0fe38da7c39cb7309e77394c2a2cb67b91655f5bf0edb918'
+    },
+    {
+      platform: 'mac',
+      platformLabel: 'macOS',
+      chip: 'Apple Silicon (Portable)',
+      name: 'Mochi-Desktop-Companion-1.0.0-arm64-mac.zip',
+      localFile: 'release/Mochi Desktop Companion-1.0.0-arm64-mac.zip',
+      format: '.zip',
+      size: '105.7 MB',
+      recommended: false,
+      sha512: 'f4e4a240652f04343b20f9307aeb5139602aa8d95746ba73e219649861cc816a7ab6ba6050451b89bef5d29789d54dbe75e671e55d7e20d6d34f2640171e428a'
+    },
+    {
+      platform: 'mac',
+      platformLabel: 'macOS',
+      chip: 'Intel Mac (Portable)',
+      name: 'Mochi-Desktop-Companion-1.0.0-mac.zip',
+      localFile: 'release/Mochi Desktop Companion-1.0.0-mac.zip',
+      format: '.zip',
+      size: '109.9 MB',
+      recommended: false,
+      sha512: 'ec7d72d85793f8d7b4cbf3560fb77e611fceef3e51a6dbf708352e4b63e980821d6b239ce5a309817883d1cd158c1a1de8f7ff7753e14c0e1b25070050f603a1'
+    },
+    {
+      platform: 'win',
+      platformLabel: 'Windows',
+      chip: 'x64 (Installer)',
+      name: 'Mochi-Desktop-Companion-Setup-1.0.0.exe',
+      localFile: 'release/Mochi Desktop Companion Setup 1.0.0.exe',
+      format: '.exe',
+      size: '87.6 MB',
+      recommended: true,
+      sha512: 'ce167761df01c7c3d85cbea7e4acf36f63bfa02f0f31435e46c1c5aaa004457272977c42bcc437725e340023a5a656323db39c9d568d63c957ce2e38fee7ffcc'
+    },
+    {
+      platform: 'win',
+      platformLabel: 'Windows',
+      chip: 'x64 (Portable Standalone)',
+      name: 'Mochi-Desktop-Companion-1.0.0.exe',
+      localFile: 'release/Mochi Desktop Companion 1.0.0.exe',
+      format: '.exe',
+      size: '87.3 MB',
+      recommended: false,
+      sha512: '8a1773155e92a478e4ff90555762bfa4088c2e8c8a40be3f3cd11176215e715e9827e28fe9a6c11f82b7e58ad421b7e6ef43aca5db673f5069a5e24ceb77c427'
+    },
+    {
+      platform: 'linux',
+      platformLabel: 'Linux',
+      chip: 'Universal (x86_64)',
+      name: 'Mochi-Desktop-Companion-1.0.0.AppImage',
+      localFile: 'release/Mochi Desktop Companion-1.0.0.AppImage',
+      format: '.AppImage',
+      size: '116.1 MB',
+      recommended: true,
+      sha512: 'f91ad7423be97920c27b68c4581a1327b4696538be99b180ebb90a0b371c17a36331ab49dc7c1b28dace6b2ff667b97af7eb9c61d3c79d481b849396507a80f5'
+    },
+    {
+      platform: 'linux',
+      platformLabel: 'Linux',
+      chip: 'Source Tarball (tar.gz)',
+      name: 'mochi-desktop-companion-1.0.0.tar.gz',
+      localFile: 'release/mochi-desktop-companion-1.0.0.tar.gz',
+      format: '.tar.gz',
+      size: '109.3 MB',
+      recommended: false,
+      sha512: 'fff3e0abc9a6e8d3f85ca1d0952d6e5c926cb9fb4075aa2da75674d663d25a02d0c7912bde7c7378388df05ab7d7ea694220b99e180d6e7232a31d2ad60aa826'
+    }
+  ];
+
+  /* Resolve asset URL */
+  function getAssetUrl(asset) {
+    if (isLocalEnv && asset.localFile) {
+      return encodeURI(asset.localFile);
+    }
+    return `${GITHUB_RELEASE_BASE}/${asset.name}`;
+  }
+
+  /* Sync all static links */
+  document.querySelectorAll('[data-asset]').forEach((el) => {
+    const assetName = el.getAttribute('data-asset');
+    const asset = RELEASE_ASSETS.find((a) => a.name === assetName);
+    if (asset) {
+      el.href = getAssetUrl(asset);
+      if (isLocalEnv) {
+        el.setAttribute('download', asset.name);
+      } else {
+        el.removeAttribute('download');
+      }
+    }
+  });
+
+  /* OS and Architecture Detection */
+  function detectClientOS() {
+    const ua = navigator.userAgent || '';
+    const platform = navigator.platform || '';
+
+    let os = 'mac';
+    let isArm = true;
+
+    if (/Win/i.test(platform) || /Windows/i.test(ua)) {
+      os = 'win';
+      isArm = false;
+    } else if (/Linux/i.test(platform) || /Linux/i.test(ua)) {
+      os = 'linux';
+      isArm = false;
+    } else if (/Mac/i.test(platform) || /Macintosh/i.test(ua)) {
+      os = 'mac';
+      // Detect Apple Silicon vs Intel
+      try {
+        const gl = document.createElement('canvas').getContext('webgl');
+        const dbg = gl ? gl.getExtension('WEBGL_debug_renderer_info') : null;
+        const rendererStr = (gl && dbg) ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : '';
+        if (/Apple/i.test(rendererStr)) isArm = true;
+      } catch (e) {}
+    }
+
+    return { os, isArm };
+  }
+
+  const clientInfo = detectClientOS();
+
+  /* Update Hero, Nav, and Footer Download Buttons based on OS */
+  function applyDetectedOS() {
+    const heroBtn = document.getElementById('hero-download-btn');
+    const heroTitle = document.getElementById('hero-dl-title');
+    const heroSub = document.getElementById('hero-dl-sub');
+    const heroIcon = document.getElementById('hero-os-icon');
+    const heroNoteText = document.getElementById('hero-detected-text');
+    const navBtnText = document.getElementById('nav-dl-text');
+    const bottomBtn = document.getElementById('bottom-download-btn');
+    const bottomBtnText = document.getElementById('bottom-dl-text');
+
+    const appleSvg = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 3.5c.62-.75 1.04-1.8 1.01-2.85-.9.04-1.98.6-2.62 1.35-.57.65-1.07 1.71-1.02 2.73 1 .08 2.01-.48 2.63-1.23z"/></svg>';
+    const winSvg = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.479l7.377-1.016v7.127H3V5.479zm0 13.042l7.377 1.017v-7.04H3v6.023zm8.333 1.149L21 21V11.59H11.333v8.078zm0-15.341v8.08H21V3l-9.667 1.329z"/></svg>';
+    const linuxSvg = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.5 2 7.5 4 7.5 6.5c0 1.2.5 2.3 1.3 3.1-.1.4-.3.9-.3 1.4 0 2.2 1.8 4 4 4s4-1.8 4-4c0-.5-.2-1-.3-1.4.8-.8 1.3-1.9 1.3-3.1C17.5 4 15.5 2 12 2zm-2.5 4.5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5S11.8 8 11 8s-1.5-.7-1.5-1.5zm6 0c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5.7-1.5 1.5-1.5 1.5.7 1.5 1.5zM6 19.5c0-1.9 1.6-3.5 3.5-3.5h5c1.9 0 3.5 1.6 3.5 3.5 0 .8-.7 1.5-1.5 1.5H7.5C6.7 21 6 20.3 6 19.5z"/></svg>';
+
+    let targetAsset;
+    if (clientInfo.os === 'win') {
+      targetAsset = RELEASE_ASSETS.find((a) => a.name === 'Mochi-Desktop-Companion-Setup-1.0.0.exe');
+      if (heroTitle) heroTitle.textContent = 'Download for Windows';
+      if (heroSub) heroSub.textContent = 'Setup (.exe) • 87.6 MB • v1.0.0';
+      if (heroIcon) heroIcon.innerHTML = winSvg;
+      if (heroNoteText) heroNoteText.textContent = 'Auto-detected: Windows 10/11 (64-bit)';
+      if (navBtnText) navBtnText.textContent = 'Download for Windows';
+      if (bottomBtnText) bottomBtnText.textContent = 'Download for Windows (.exe)';
+      const winCard = document.getElementById('card-win');
+      if (winCard) winCard.classList.add('is-detected');
+    } else if (clientInfo.os === 'linux') {
+      targetAsset = RELEASE_ASSETS.find((a) => a.name === 'Mochi-Desktop-Companion-1.0.0.AppImage');
+      if (heroTitle) heroTitle.textContent = 'Download for Linux';
+      if (heroSub) heroSub.textContent = 'AppImage • 116.1 MB • v1.0.0';
+      if (heroIcon) heroIcon.innerHTML = linuxSvg;
+      if (heroNoteText) heroNoteText.textContent = 'Auto-detected: Linux (Universal AppImage)';
+      if (navBtnText) navBtnText.textContent = 'Download for Linux';
+      if (bottomBtnText) bottomBtnText.textContent = 'Download for Linux (.AppImage)';
+      const linuxCard = document.getElementById('card-linux');
+      if (linuxCard) linuxCard.classList.add('is-detected');
+    } else {
+      // macOS
+      targetAsset = RELEASE_ASSETS.find((a) => a.name === (clientInfo.isArm ? 'Mochi-Desktop-Companion-1.0.0-arm64.dmg' : 'Mochi-Desktop-Companion-1.0.0.dmg'));
+      if (heroTitle) heroTitle.textContent = 'Download for Mac';
+      if (heroSub) heroSub.textContent = clientInfo.isArm ? 'Apple Silicon (.dmg) • 110.5 MB' : 'Intel Mac (.dmg) • 114.7 MB';
+      if (heroIcon) heroIcon.innerHTML = appleSvg;
+      if (heroNoteText) heroNoteText.textContent = clientInfo.isArm ? 'Auto-detected: macOS (Apple Silicon M-series)' : 'Auto-detected: macOS (Intel x86_64)';
+      if (navBtnText) navBtnText.textContent = 'Download for Mac';
+      if (bottomBtnText) bottomBtnText.textContent = 'Download for Mac (.dmg)';
+      const macCard = document.getElementById('card-mac');
+      if (macCard) macCard.classList.add('is-detected');
+    }
+
+    if (targetAsset) {
+      const url = getAssetUrl(targetAsset);
+      if (heroBtn) heroBtn.href = url;
+      if (bottomBtn) bottomBtn.href = url;
+    }
+  }
+
+  applyDetectedOS();
+
+  /* Platform Filter Tabs */
+  const tabButtons = document.querySelectorAll('[data-dl-filter]');
+  const cards = document.querySelectorAll('.dl-card');
+
+  tabButtons.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabButtons.forEach((t) => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      const filter = tab.getAttribute('data-dl-filter');
+      cards.forEach((card) => {
+        if (filter === 'all' || card.getAttribute('data-platform') === filter) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  /* Checksums Dialog Modal & Table Population */
+  const checksumDialog = document.getElementById('checksum-dialog');
+  const openChecksumBtn = document.getElementById('open-checksums-btn');
+  const closeChecksumBtn = document.getElementById('close-checksums-btn');
+  const checksumTbody = document.getElementById('checksum-tbody');
+
+  function renderChecksumsTable() {
+    if (!checksumTbody) return;
+    checksumTbody.innerHTML = RELEASE_ASSETS.map((asset) => {
+      const url = getAssetUrl(asset);
+      const isMac = asset.platform === 'mac';
+      const isWin = asset.platform === 'win';
+      const icon = isMac ? '🍎' : isWin ? '🪟' : '🐧';
+      return `
+        <tr>
+          <td><strong>${icon} ${asset.platformLabel}</strong><br><small style="opacity:.8">${asset.chip}</small></td>
+          <td><code style="font-size:.82rem">${asset.name}</code></td>
+          <td><span class="dl-ext-pill">${asset.size}</span></td>
+          <td>
+            <div class="hash-cell">
+              <span class="hash-text" title="${asset.sha512}">${asset.sha512.slice(0, 14)}...${asset.sha512.slice(-10)}</span>
+              <button type="button" class="btn-copy-hash" data-copy="${asset.sha512}">Copy</button>
+            </div>
+          </td>
+          <td>
+            <a class="btn-table-dl" href="${url}" ${isLocalEnv ? `download="${asset.name}"` : ''}>
+              &darr; Download
+            </a>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    // Attach copy handlers
+    checksumTbody.querySelectorAll('.btn-copy-hash').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const hash = btn.getAttribute('data-copy');
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(hash).then(() => {
+            const original = btn.textContent;
+            btn.textContent = 'Copied! ✓';
+            btn.style.background = 'var(--mint)';
+            setTimeout(() => {
+              btn.textContent = original;
+              btn.style.background = '';
+            }, 1800);
+          });
+        }
+      });
+    });
+  }
+
+  renderChecksumsTable();
+
+  if (openChecksumBtn && checksumDialog) {
+    openChecksumBtn.addEventListener('click', () => {
+      checksumDialog.showModal();
+    });
+  }
+
+  if (closeChecksumBtn && checksumDialog) {
+    closeChecksumBtn.addEventListener('click', () => {
+      checksumDialog.close();
+    });
+  }
+
+  // Light dismiss on backdrop click
+  if (checksumDialog) {
+    checksumDialog.addEventListener('click', (e) => {
+      const rect = checksumDialog.getBoundingClientRect();
+      const inDialog = (
+        rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+        rect.left <= e.clientX && e.clientX <= rect.left + rect.width
+      );
+      if (!inDialog) {
+        checksumDialog.close();
+      }
+    });
+  }
+
+  // Linux command copy button
+  const linuxCopyBtn = document.getElementById('linux-cmd-copy');
+  const linuxCmdCode = document.getElementById('linux-cmd-code');
+  if (linuxCopyBtn && linuxCmdCode) {
+    linuxCopyBtn.addEventListener('click', () => {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(linuxCmdCode.textContent.trim()).then(() => {
+          linuxCopyBtn.textContent = 'Copied! ✓';
+          setTimeout(() => { linuxCopyBtn.textContent = 'Copy'; }, 1800);
+        });
+      }
     });
   }
 })();

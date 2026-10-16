@@ -3,3 +3,8 @@ Thumbs.db
 node_modules/
 dist/
 *.dmg
+*.exe
+*.AppImage
+*.tar.gz
+*.blockmap
+release/
